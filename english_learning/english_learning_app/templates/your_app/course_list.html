@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách khóa học Tiếng Anh</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #course-list {
+            margin: 20px;
+        }
+        .course {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Danh sách khóa học Tiếng Anh</h1>
+    <div id="course-list"></div>
+
+    <script>
+        // Danh sách các khóa học
+        const courses = [
+            { title: "Tiếng Anh cơ bản", instructor: "Lương Xuân Trường", price: "$500" },
+            { title: "Tiếng Anh giao tiếp", instructor: "Nguyễn Công Phượng", price: "$600" },
+            { title: "Tiếng Anh nâng cao", instructor: "Nguyễn Văn Toàn", price: "$400" },
+            { title: "Tiếng Anh kinh doanh", instructor: "Nguyễn Tuấn Anh", price: "$500" },
+        ];
+
+        // Hiển thị danh sách khóa học
+        const courseList = document.getElementById("course-list");
+
+        courses.forEach(course => {
+            const courseElement = document.createElement("div");
+            courseElement.classList.add("course");
+
+            const titleElement = document.createElement("h2");
+            titleElement.textContent = course.title;
+
+            const instructorElement = document.createElement("p");
+            instructorElement.textContent = "Giảng viên: " + course.instructor;
+
+            const priceElement = document.createElement("p");
+            priceElement.textContent = "Giá: " + course.price;
+
+            courseElement.appendChild(titleElement);
+            courseElement.appendChild(instructorElement);
+            courseElement.appendChild(priceElement);
+
+            courseList.appendChild(courseElement);
+        });
+    </script>
+</body>
+</html>
