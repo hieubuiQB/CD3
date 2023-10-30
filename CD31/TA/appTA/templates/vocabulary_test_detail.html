@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ vocabulary_test.title }}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <h1>{{ vocabulary_test.title }}</h1>
+    <p>{{ vocabulary_test.description }}</p>
+    <p>Time Limit: {{ vocabulary_test.time_limit_minutes }} minutes</p>
+    <p>Number of Questions: {{ vocabulary_test.number_of_questions }}</p>
+</body>
+</html>

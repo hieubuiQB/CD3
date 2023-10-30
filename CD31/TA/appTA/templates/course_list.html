@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Danh sách khóa học</title>
+</head>
+<body>
+    <h1>Danh sách khóa học</h1>
+    <ul>
+        {% for course in courses %}
+            <li>
+                <h2>{{ course.title }}</h2>
+                <p>Instructor: {{ course.instructor }}</p>
+                <p>Description: {{ course.description }}</p>
+                <img src="{{ course.image.url }}" alt="{{ course.title }}" width="300">
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kết quả </title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            background-color: #2196F3;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .quiz-results {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            margin: 10px auto;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        a {
+            text-decoration: none;
+            color: #2196F3;
+            font-weight: bold;
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kết quả bài kiểm tra - {{ quiz.title }}</h1>
+    <div class="quiz-results">
+        <p>Điểm số: {{ score }}/{{ total_questions }}</p>
+        <p>Tỷ lệ điểm: {{ percentage_score }}%</p>
+        <p id="current-time">Thời gian hiện tại: Loading...</p>
+        <p id="countdown">Thời gian còn lại: Loading...</p>
+    </div>
+    <a href="{% url 'quiz_list' %}">Quay lại danh sách bài kiểm tra</a>
+
+    <script>
+        function updateClock() {
+            const currentTimeElement = document.getElementById('current-time');
+            const countdownElement = document.getElementById('countdown');
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            currentTimeElement.textContent = `Thời gian hiện tại: ${hours}:${minutes}:${seconds}`;
+
+            const examEndTime = new Date('{{ end_time }}'); // Thời gian kết thúc làm bài
+            const timeRemaining = examEndTime - now;
+            if (timeRemaining > 0) {
+                const remainingMinutes = Math.floor((timeRemaining / 1000 / 60) % 60);
+                const remainingSeconds = Math.floor((timeRemaining / 1000) % 60);
+                countdownElement.textContent = `Thời gian còn lại: ${remainingMinutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+            } else {
+                countdownElement.textContent = 'Thời gian đã hết.';
+            }
+        }
+
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>

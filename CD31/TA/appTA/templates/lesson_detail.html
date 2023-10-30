@@ -1,0 +1,134 @@
+<!-- lesson_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ lesson.title }}</title>
+     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        nav {
+            background-color: #4267B2;
+            color: black;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-image: url('/static/assets/images/1.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        nav a {
+            color: black;
+            text-decoration: none;
+            margin: 0 20px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .content{
+           padding: 20px 20px 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+    <nav>
+     <a href="{% url 'course_lessons' course_id=course.id %}"><img src="/static/assets/images/back.png" alt="Logo" width="20" height="20" style="margin-right: 20px;">
+     </a>
+    </nav>
+    </header>
+    <div class="content">
+    <h1>{{ lesson.title }}</h1>
+<!--    <p>Instructor: {{ lesson.course.instructor }}</p>-->
+<!--    <p>Description: {{ lesson.course.description }}</p>-->
+    <p>Content:</p>
+    <p>{{ lesson.content|safe }}</p>
+    </div>
+    {% if previous_lesson %}
+        <p>Previous Lesson: <a href="{% url 'lesson_detail' lesson_id=previous_lesson.id %}">{{ previous_lesson.title }}</a></p>
+    {% endif %}
+    {% if next_lesson %}
+        <p>Next Lesson: <a href="{% url 'lesson_detail' lesson_id=next_lesson.id %}">{{ next_lesson.title }}</a></p>
+    {% endif %}
+
+    <a href="{% url 'quiz_list' %}">Bài kiểm tra</a>
+
+</body>
+</html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>{{ lesson.title }}</title>-->
+<!--    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">-->
+<!--    <style>-->
+<!--        body {-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--        }-->
+
+<!--        nav {-->
+<!--            background-color: #4267B2;-->
+<!--            color: white;-->
+<!--            display: flex;-->
+<!--            justify-content: space-between;-->
+<!--            align-items: center;-->
+<!--            padding: 10px 20px;-->
+<!--            position: fixed;-->
+<!--            top: 0;-->
+<!--            left: 0;-->
+<!--            width: 100%;-->
+<!--            z-index: 1000;-->
+<!--        }-->
+
+<!--        nav a {-->
+<!--            color: white;-->
+<!--            text-decoration: none;-->
+<!--            font-weight: bold;-->
+<!--            font-size: 18px;-->
+<!--            margin-left: 20px;-->
+<!--        }-->
+
+<!--        .content {-->
+<!--            padding: 80px 20px 20px 20px; /* Adjust padding for content */-->
+<!--        }-->
+
+<!--        .quiz-button {-->
+<!--            position: fixed;-->
+<!--            top: 20px;-->
+<!--            right: 20px;-->
+<!--            background-color: #4267B2;-->
+<!--            color: white;-->
+<!--            padding: 10px 20px;-->
+<!--            border: none;-->
+<!--            border-radius: 5px;-->
+<!--            text-decoration: none;-->
+<!--            font-weight: bold;-->
+<!--            z-index: 1001;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <header>-->
+<!--        <nav>-->
+<!--            <a href="{% url 'course_lessons' course_id=course.id %}">-->
+<!--                <img src="/static/assets/images/back.png" alt="Logo" width="20" height="20" style="margin-right: 20px;">-->
+<!--                Back to Course-->
+<!--            </a>-->
+<!--        </nav>-->
+<!--    </header>-->
+<!--    <div class="content">-->
+<!--        <h1>{{ lesson.title }}</h1>-->
+<!--        <p>Content:</p>-->
+<!--        <p>{{ lesson.content|safe }}</p>-->
+<!--    </div>-->
+<!--    <a href="{% url 'quiz_list' %}" class="quiz-button">Bài kiểm tra</a>-->
+<!--</body>-->
+<!--</html>-->

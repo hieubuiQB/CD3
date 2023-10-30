@@ -1,0 +1,645 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>{{ quiz.title }}</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>{{ quiz.title }}</h1>-->
+<!--    <p>{{ quiz.description }}</p>-->
+
+<!--   <form method="post" action="{% url 'quiz_answer' quiz.id %}">-->
+<!--    {% csrf_token %}-->
+<!--    <h2>Câu hỏi:</h2>-->
+<!--    <ul>-->
+<!--        {% for question in quiz.question_set.all %}-->
+<!--            <li>-->
+<!--                {{ question.content }}-->
+<!--                <ul>-->
+<!--                    {% for choice in question.choice_set.all %}-->
+<!--                        <li>-->
+<!--                            <label>-->
+<!--                                <input type="radio" name="question_{{ question.id }}" value="{{ choice.id }}">-->
+<!--                                {% if choice.is_correct %}-->
+<!--&lt;!&ndash;                                    <span style="color: green;">{{ choice.content }}</span> &lt;!&ndash; Đáp án đúng &ndash;&gt;&ndash;&gt;-->
+<!--                                {% else %}-->
+<!--                                    {{ choice.content }}-->
+<!--                                {% endif %}-->
+<!--                            </label>-->
+<!--                        </li>-->
+<!--                    {% endfor %}-->
+<!--                </ul>-->
+<!--            </li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--    <input type="submit" value="Nộp bài kiểm tra">-->
+<!--</form>-->
+
+<!--    <a href="{% url 'quiz_list' %}">Quay lại danh sách bài kiểm tra</a>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>{{ quiz.title }}</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--        }-->
+<!--        h1 {-->
+<!--            text-align: center;-->
+<!--        }-->
+<!--        .quiz-container {-->
+<!--            max-width: 600px;-->
+<!--            margin: 0 auto;-->
+<!--            padding: 20px;-->
+<!--            background-color: #f5f5f5;-->
+<!--            border-radius: 10px;-->
+<!--            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+<!--        .question {-->
+<!--            margin: 20px 0;-->
+<!--        }-->
+<!--        .options {-->
+<!--            list-style: none;-->
+<!--            padding: 0;-->
+<!--        }-->
+<!--        .option {-->
+<!--            margin: 10px 0;-->
+<!--        }-->
+<!--        .option label {-->
+<!--            display: block;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        .option input[type="radio"] {-->
+<!--            display: none;-->
+<!--        }-->
+<!--        .option label::before {-->
+<!--            content: '';-->
+<!--            display: inline-block;-->
+<!--            width: 20px;-->
+<!--            height: 20px;-->
+<!--            margin-right: 10px;-->
+<!--            border: 2px solid #333;-->
+<!--            border-radius: 50%;-->
+<!--            vertical-align: middle;-->
+<!--        }-->
+<!--        .option input[type="radio"]:checked + label::before {-->
+<!--            background-color: #2196F3;-->
+<!--            border: 2px solid #2196F3;-->
+<!--        }-->
+<!--        .submit-button {-->
+<!--            display: block;-->
+<!--            margin-top: 20px;-->
+<!--            background-color: #2196F3;-->
+<!--            color: #fff;-->
+<!--            border: none;-->
+<!--            border-radius: 5px;-->
+<!--            padding: 10px 20px;-->
+<!--            font-size: 16px;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        a {-->
+<!--            display: block;-->
+<!--            text-align: center;-->
+<!--            margin-top: 20px;-->
+<!--            color: #2196F3;-->
+<!--            text-decoration: none;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="quiz-container">-->
+<!--        <h1>{{ quiz.title }}</h1>-->
+<!--        <p>{{ quiz.description }}</p>-->
+
+<!--        <form method="post" action="{% url 'quiz_answer' quiz.id %}">-->
+<!--            {% csrf_token %}-->
+<!--            <h2>Câu hỏi:</h2>-->
+<!--            <ul class="questions">-->
+<!--                {% for question in quiz.question_set.all %}-->
+<!--                    <li class="question">-->
+<!--                        {{ question.content }}-->
+<!--                        <ul class="options">-->
+<!--                            {% for choice in question.choice_set.all %}-->
+<!--                                <li class="option">-->
+<!--                                    <input type="radio" id="question_{{ question.id }}_choice_{{ choice.id }}" name="question_{{ question.id }}" value="{{ choice.id }}">-->
+<!--                                    <label for="question_{{ question.id }}_choice_{{ choice.id }}">{{ choice.content }}</label>-->
+<!--                                </li>-->
+<!--                            {% endfor %}-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                {% endfor %}-->
+<!--            </ul>-->
+<!--            <input type="submit" class="submit-button" value="Nộp bài kiểm tra">-->
+<!--        </form>-->
+
+<!--        <a href="{% url 'quiz_list' %}">Quay lại danh sách bài kiểm tra</a>-->
+<!--    </div>-->
+<!--<script>-->
+<!--        // Set the time limit in seconds-->
+<!--        const timeLimit = 900; // 15 minutes-->
+
+<!--        // Get the current time-->
+<!--        const currentTime = new Date().getTime();-->
+
+<!--        // Calculate the deadline by adding the time limit to the current time-->
+<!--        const deadline = new Date(currentTime + timeLimit * 1000);-->
+
+<!--        // Update the countdown timer every second-->
+<!--        const countdown = document.getElementById("countdown");-->
+<!--        const submitButton = document.getElementById("submit-button");-->
+<!--        const quizForm = document.getElementById("quiz-form");-->
+
+<!--        const interval = setInterval(function () {-->
+<!--            const now = new Date().getTime();-->
+<!--            const timeRemaining = deadline - now;-->
+
+<!--            if (timeRemaining <= 0) {-->
+<!--                clearInterval(interval);-->
+<!--                countdown.innerHTML = "Hết giờ!";-->
+<!--                submitButton.click(); // Automatically submit the quiz when time is up-->
+<!--            } else {-->
+<!--                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));-->
+<!--                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);-->
+<!--                countdown.innerHTML = `${minutes} phút ${seconds} giây còn lại`;-->
+<!--            }-->
+<!--        }, 1000);-->
+
+<!--        // Add an event listener to the submit button to stop the timer when the form is submitted-->
+<!--        submitButton.addEventListener("click", function () {-->
+<!--            clearInterval(interval);-->
+<!--            quizForm.submit();-->
+<!--        });-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns="http://www.w3.org/1999/html">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>{{ quiz.title }}</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--        }-->
+<!--        h1 {-->
+<!--            text-align: center;-->
+<!--        }-->
+<!--        .quiz-container {-->
+<!--            max-width: 600px;-->
+<!--            margin: 0 auto;-->
+<!--            padding: 20px;-->
+<!--            background-color: #f5f5f5;-->
+<!--            border-radius: 10px;-->
+<!--            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+<!--        .question {-->
+<!--            margin: 20px 0;-->
+<!--        }-->
+<!--        .options {-->
+<!--            list-style: none;-->
+<!--            padding: 0;-->
+<!--        }-->
+<!--        .option {-->
+<!--            margin: 10px 0;-->
+<!--        }-->
+<!--        .option label {-->
+<!--            display: block;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        .option input[type="radio"] {-->
+<!--            display: none;-->
+<!--        }-->
+<!--        .option label::before {-->
+<!--            content: '';-->
+<!--            display: inline-block;-->
+<!--            width: 20px;-->
+<!--            height: 20px;-->
+<!--            margin-right: 10px;-->
+<!--            border: 2px solid #333;-->
+<!--            border-radius: 50%;-->
+<!--            vertical-align: middle;-->
+<!--        }-->
+<!--        .option input[type="radio"]:checked + label::before {-->
+<!--            background-color: #2196F3;-->
+<!--            border: 2px solid #2196F3;-->
+<!--        }-->
+<!--        .submit-button {-->
+<!--            display: block;-->
+<!--            margin-top: 20px;-->
+<!--            background-color: #2196F3;-->
+<!--            color: #fff;-->
+<!--            border: none;-->
+<!--            border-radius: 5px;-->
+<!--            padding: 10px 20px;-->
+<!--            font-size: 16px;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        a {-->
+<!--            display: block;-->
+<!--            text-align: center;-->
+<!--            margin-top: 20px;-->
+<!--            color: #2196F3;-->
+<!--            text-decoration: none;-->
+<!--        }-->
+<!--        .button-container {-->
+<!--        display: flex;-->
+<!--        justify-content: space-between;-->
+<!--    }-->
+
+<!--    #next-button,-->
+<!--    #previous-button {-->
+<!--        background-color: #2196F3;-->
+<!--        color: #fff;-->
+<!--        border: none;-->
+<!--        border-radius: 5px;-->
+<!--        padding: 10px 20px;-->
+<!--        font-size: 16px;-->
+<!--        cursor: pointer;-->
+<!--        transition: background-color 0.3s;-->
+<!--    }-->
+
+<!--    #next-button:hover,-->
+<!--    #previous-button:hover {-->
+<!--        background-color: #1565C0; /* Darker shade for hover effect */-->
+<!--    }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="quiz-container">-->
+<!--        <h1>{{ quiz.title }}</h1>-->
+<!--        <p>{{ quiz.description }}</p>-->
+
+<!--        &lt;!&ndash; Countdown Timer &ndash;&gt;-->
+<!--        <div id="countdown" class="countdown"></div>-->
+
+<!--        <form method="post" action="{% url 'quiz_answer' quiz.id %}" id="quiz-form">-->
+<!--            {% csrf_token %}-->
+<!--            <h2>Câu hỏi:</h2>-->
+<!--            <ul class="questions">-->
+<!--                {% for question in quiz.question_set.all %}-->
+<!--                    <li class="question">-->
+<!--                        {{ question.content }}-->
+<!--                        <ul class="options">-->
+<!--                            {% for choice in question.choice_set.all %}-->
+<!--                                <li class="option">-->
+<!--                                    <input type="radio" id="question_{{ question.id }}_choice_{{ choice.id }}" name="question_{{ question.id }}" value="{{ choice.id }}">-->
+<!--                                    <label for="question_{{ question.id }}_choice_{{ choice.id }}">{{ choice.content }}</label>-->
+<!--                                </li>-->
+<!--                            {% endfor %}-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                {% endfor %}-->
+<!--            </ul>-->
+<!--            <button id="previous-button">Previous</button>-->
+<!--            <button id="next-button">Next</button>-->
+<!--            <input type="submit" class="submit-button" value="Nộp bài kiểm tra" id="submit-button">-->
+<!--    </div>-->
+<!--        </form>-->
+
+<!--        <a href="{% url 'quiz_list' %}">Quay lại danh sách bài kiểm tra</a>-->
+<!--    </div>-->
+
+
+<!--<script>-->
+<!--// JavaScript code to handle pagination-->
+<!--const questions = document.querySelectorAll(".question");-->
+<!--const nextButton = document.getElementById("next-button");-->
+<!--const previousButton = document.getElementById("previous-button");-->
+<!--const submitButton = document.getElementById("submit-button");-->
+
+<!--let currentPage = 0;-->
+
+<!--function showCurrentPage() {-->
+<!--    questions.forEach((question, index) => {-->
+<!--        if (index === currentPage) {-->
+<!--            question.style.display = "block";-->
+<!--        } else {-->
+<!--            question.style.display = "none";-->
+<!--        }-->
+<!--    });-->
+
+<!--    // Disable "Previous" button on the first question-->
+<!--    previousButton.disabled = currentPage === 0;-->
+
+<!--    // Disable "Next" button on the last question-->
+<!--    nextButton.disabled = currentPage === questions.length - 1;-->
+
+<!--    // Show or hide the submit button based on the current page-->
+<!--    if (currentPage === questions.length - 1) {-->
+<!--        submitButton.style.display = "block";-->
+<!--    } else {-->
+<!--        submitButton.style.display = "none";-->
+<!--    }-->
+<!--}-->
+
+<!--nextButton.addEventListener("click", () => {-->
+<!--    currentPage++;-->
+<!--    if (currentPage >= questions.length) {-->
+<!--        currentPage = questions.length - 1;-->
+<!--    }-->
+<!--    showCurrentPage();-->
+<!--});-->
+
+<!--previousButton.addEventListener("click", () => {-->
+<!--    currentPage&#45;&#45;;-->
+<!--    if (currentPage < 0) {-->
+<!--        currentPage = 0;-->
+<!--    }-->
+<!--    showCurrentPage();-->
+<!--});-->
+
+<!--// Initialize the display-->
+<!--showCurrentPage();-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns="http://www.w3.org/1999/html">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>{{ quiz.title }}</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--        }-->
+<!--        h1 {-->
+<!--            text-align: center;-->
+<!--        }-->
+<!--        .quiz-container {-->
+<!--            max-width: 600px;-->
+<!--            margin: 0 auto;-->
+<!--            padding: 20px;-->
+<!--            background-color: #f5f5f5;-->
+<!--            border-radius: 10px;-->
+<!--            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+<!--        .question {-->
+<!--            margin: 20px 0;-->
+<!--        }-->
+<!--        .options {-->
+<!--            list-style: none;-->
+<!--            padding: 0;-->
+<!--        }-->
+<!--        .option {-->
+<!--            margin: 10px 0;-->
+<!--        }-->
+<!--        .option label {-->
+<!--            display: block;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        .option input[type="radio"] {-->
+<!--            display: none;-->
+<!--        }-->
+<!--        .option label::before {-->
+<!--            content: '';-->
+<!--            display: inline-block;-->
+<!--            width: 20px;-->
+<!--            height: 20px;-->
+<!--            margin-right: 10px;-->
+<!--            border: 2px solid #333;-->
+<!--            border-radius: 50%;-->
+<!--            vertical-align: middle;-->
+<!--        }-->
+<!--        .option input[type="radio"]:checked + label::before {-->
+<!--            background-color: #2196F3;-->
+<!--            border: 2px solid #2196F3;-->
+<!--        }-->
+<!--        .submit-button {-->
+<!--            display: block;-->
+<!--            margin-top: 20px;-->
+<!--            background-color: #2196F3;-->
+<!--            color: #fff;-->
+<!--            border: none;-->
+<!--            border-radius: 5px;-->
+<!--            padding: 10px 20px;-->
+<!--            font-size: 16px;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        a {-->
+<!--            display: block;-->
+<!--            text-align: center;-->
+<!--            margin-top: 20px;-->
+<!--            color: #2196F3;-->
+<!--            text-decoration: none;-->
+<!--        }-->
+<!--        .button-container {-->
+<!--        display: flex;-->
+<!--        justify-content: space-between;-->
+<!--    }-->
+
+<!--    #next-button,-->
+<!--    #previous-button {-->
+<!--        background-color: #2196F3;-->
+<!--        color: #fff;-->
+<!--        border: none;-->
+<!--        border-radius: 5px;-->
+<!--        padding: 10px 20px;-->
+<!--        font-size: 16px;-->
+<!--        cursor: pointer;-->
+<!--        transition: background-color 0.3s;-->
+<!--    }-->
+
+<!--    #next-button:hover,-->
+<!--    #previous-button:hover {-->
+<!--        background-color: #1565C0; /* Darker shade for hover effect */-->
+<!--    }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="quiz-container">-->
+<!--        <h1>{{ quiz.title }}</h1>-->
+<!--        <p>{{ quiz.description }}</p>-->
+<!--        &lt;!&ndash; Countdown Timer &ndash;&gt;-->
+<!--        <div id="countdown" class="countdown"></div>-->
+<!--        <form method="post" action="{% url 'quiz_answer' quiz.id %}" id="quiz-form">-->
+<!--            {% csrf_token %}-->
+<!--            <h2>Câu hỏi:</h2>-->
+<!--            <ul class="questions">-->
+<!--                {% for question in quiz.question_set.all %}-->
+<!--                    <li class="question">-->
+<!--                        {{ question.content }}-->
+<!--                        <ul class="options">-->
+<!--                            {% for choice in question.choice_set.all %}-->
+<!--                                <li class="option">-->
+<!--                                    <input type="radio" id="question_{{ question.id }}_choice_{{ choice.id }}" name="question_{{ question.id }}" value="{{ choice.id }}">-->
+<!--                                    <label for="question_{{ question.id }}_choice_{{ choice.id }}">{{ choice.content }}</label>-->
+<!--                                </li>-->
+<!--                            {% endfor %}-->
+<!--                        </ul>-->
+<!--                    </li>-->
+<!--                {% endfor %}-->
+<!--            </ul>-->
+<!--            <div class="button-container">-->
+<!--                <button id="previous-button">Previous</button>-->
+<!--                <button id="next-button">Next</button>-->
+<!--            </div>-->
+<!--            <input type="submit" class="submit-button" value="Nộp bài kiểm tra" id="submit-button">-->
+<!--        </form>-->
+<!--        <a href="{% url 'quiz_list' %}">Quay lại danh sách bài kiểm tra</a>-->
+<!--    </div>-->
+
+<!--<script>-->
+<!--function startTimer(duration, display) {-->
+<!--    var timer = duration, minutes, seconds;-->
+<!--    setInterval(function () {-->
+<!--        minutes = parseInt(timer / 60, 10);-->
+<!--        seconds = parseInt(timer % 60, 10);-->
+
+<!--        minutes = minutes < 10 ? "0" + minutes : minutes;-->
+<!--        seconds = seconds < 10 ? "0" + seconds : seconds;-->
+
+<!--        display.textContent = minutes + ":" + seconds;-->
+
+<!--        if (&#45;&#45;timer < 0) {-->
+<!--            timer = 0; // Timer expired-->
+<!--            document.getElementById("timeout-message").style.display = "block";-->
+<!--            document.getElementById("quiz-form").submit(); // Automatically submit the form when the timer expires-->
+<!--        }-->
+<!--    }, 1000);-->
+<!--}-->
+
+<!--window.onload = function () {-->
+<!--    var oneHour = 60 * 60, // 1 hour in seconds-->
+<!--        display = document.querySelector('#timer');-->
+<!--    startTimer(oneHour, display);-->
+<!--};-->
+
+<!--    var currentQuestion = 0;-->
+<!--    var questions = document.querySelectorAll(".question");-->
+
+<!--    function showQuestion(step) {-->
+<!--        if (currentQuestion + step >= 0 && currentQuestion + step < questions.length) {-->
+<!--            questions[currentQuestion].style.display = "none";-->
+<!--            currentQuestion += step;-->
+<!--            questions[currentQuestion].style.display = "block";-->
+
+<!--            // Update the visibility of next and previous buttons-->
+<!--            document.getElementById("prevButton").disabled = currentQuestion === 0;-->
+<!--            document.getElementById("nextButton").disabled = currentQuestion === questions.length - 1;-->
+<!--        }-->
+<!--    }-->
+
+<!--    // Initially, hide all questions except the first one-->
+<!--    for (var i = 1; i < questions.length; i++) {-->
+<!--        questions[i].style.display = "none";-->
+<!--    }-->
+
+<!--    // Disable the "Previous" button initially-->
+<!--    document.getElementById("prevButton").disabled = true;-->
+
+<!--    // Update the "Next" and "Previous" buttons based on the current question-->
+<!--    showQuestion(0);-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ quiz.title }}</title>
+    <style>
+        /* Your CSS styles go here */
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>{{ quiz.title }}</h1>
+        <p>{{ quiz.description }}</p>
+        <!-- Countdown Timer -->
+        <div id="timer" class="countdown"></div> <!-- Make sure you have an element with the id "timer" for the timer to work -->
+        <form method="post" action="{% url 'quiz_answer' quiz.id %}" id="quiz-form">
+            {% csrf_token %}
+            <h2>Câu hỏi:</h2>
+            <ul class="questions">
+                {% for question in quiz.question_set.all %}
+                    <li class="question">
+                        {{ question.content }}
+                        <ul class="options">
+                            {% for choice in question.choice_set.all %}
+                                <li class="option">
+                                    <input type="radio" id="question_{{ question.id }}_choice_{{ choice.id }}" name="question_{{ question.id }}" value="{{ choice.id }}">
+                                    <label for="question_{{ question.id }}_choice_{{ choice.id }}">{{ choice.content }}</label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+            <div class="button-container">
+                <button id="previous-button" onclick="showQuestion(-1)">Previous</button>
+                <button id="next-button" onclick="showQuestion(1)">Next</button>
+            </div>
+            <input type="submit" class="submit-button" value="Nộp bài kiểm tra" id="submit-button">
+        </form>
+        <a href="{% url 'quiz_list' %}">Quay lại danh sách bài kiểm tra</a>
+    </div>
+
+    <script>
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            var interval = setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(interval); // Clear the interval when the timer expires
+                    document.getElementById("timeout-message").style.display = "block";
+                    document.getElementById("quiz-form").submit(); // Automatically submit the form when the timer expires
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            var oneHour = 60 * 60; // 1 hour in seconds
+            var display = document.querySelector('#timer');
+            startTimer(oneHour, display);
+        };
+
+        var currentQuestion = 0;
+        var questions = document.querySelectorAll(".question");
+
+        function showQuestion(step) {
+            if (currentQuestion + step >= 0 && currentQuestion + step < questions.length) {
+                questions[currentQuestion].style.display = "none";
+                currentQuestion += step;
+                questions[currentQuestion].style.display = "block";
+
+                // Update the visibility of next and previous buttons
+                document.getElementById("previous-button").disabled = currentQuestion === 0;
+                document.getElementById("next-button").disabled = currentQuestion === questions.length - 1;
+            }
+        }
+
+        // Initially, hide all questions except the first one
+        for (var i = 1; i < questions.length; i++) {
+            questions[i].style.display = "none";
+        }
+
+        // Disable the "Previous" button initially
+        document.getElementById("previous-button").disabled = true;
+
+        // Update the "Next" and "Previous" buttons based on the current question
+        showQuestion(0);
+    </script>
+</body>
+</html>

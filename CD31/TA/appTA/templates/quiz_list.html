@@ -1,0 +1,168 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Danh sách bài kiểm tra</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            background-color: #f5f5f5;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--        }-->
+<!--        h1 {-->
+<!--            text-align: center;-->
+<!--            background-color: #2196F3;-->
+<!--            color: #fff;-->
+<!--            padding: 20px;-->
+<!--        }-->
+<!--        ul {-->
+<!--            list-style: none;-->
+<!--            padding: 0;-->
+<!--            margin: 0;-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--            align-items: center;-->
+<!--        }-->
+<!--        li {-->
+<!--            background-color: #fff;-->
+<!--            border: 1px solid #ccc;-->
+<!--            border-radius: 5px;-->
+<!--            margin: 10px;-->
+<!--            padding: 10px;-->
+<!--            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);-->
+<!--            transition: transform 0.2s;-->
+<!--            text-align: center;-->
+<!--        }-->
+<!--        li:hover {-->
+<!--            transform: scale(1.02);-->
+<!--        }-->
+<!--        a {-->
+<!--            text-decoration: none;-->
+<!--            color: #333;-->
+<!--            font-weight: bold;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Danh sách bài kiểm tra</h1>-->
+<!--    <ul>-->
+<!--        {% for quiz in quizzes %}-->
+<!--            <li>-->
+<!--                <a href="{% url 'quiz_detail' quiz.id %}">{{ quiz.title }}</a>-->
+<!--            </li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Danh sách bài kiểm tra - IOE Tiếng Anh</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            background-color: #f2f2f2;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--        }-->
+<!--        h1 {-->
+<!--            background-color: #2196F3;-->
+<!--            color: #fff;-->
+<!--            padding: 20px;-->
+<!--            text-align: center;-->
+<!--        }-->
+<!--        ul {-->
+<!--            list-style: none;-->
+<!--            padding: 0;-->
+<!--        }-->
+<!--        li {-->
+<!--            background-color: #fff;-->
+<!--            border: 1px solid #ccc;-->
+<!--            margin: 10px;-->
+<!--            padding: 20px;-->
+<!--            border-radius: 5px;-->
+<!--            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);-->
+<!--        }-->
+<!--        a {-->
+<!--            text-decoration: none;-->
+<!--            color: #2196F3;-->
+<!--            font-weight: bold;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Danh sách bài kiểm tra - IOE Tiếng Anh</h1>-->
+<!--    <ul>-->
+<!--        {% for quiz in quizzes %}-->
+<!--            <li>-->
+<!--                <a href="{% url 'quiz_detail' quiz.id %}">{{ quiz.title }}</a>-->
+<!--            </li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--    <div class="menu">-->
+<!--        <a href="{% url 'giaodien' %}">Trang chủ</a>-->
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách bài kiểm tra - IOE Tiếng Anh</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            background-color: #2196F3;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            margin: 10px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        a {
+            text-decoration: none;
+            color: #2196F3;
+            font-weight: bold;
+        }
+        .menu {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav>
+        <a href="{% url 'giaodien' %}">Trang Chủ</a>
+    </nav>
+</header>
+    <h1>Danh sách bài kiểm tra - IOE Tiếng Anh</h1>
+    <ul>
+        {% for quiz in quizzes %}
+            <li>
+                <a href="{% url 'quiz_detail' quiz.id %}">{{ quiz.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

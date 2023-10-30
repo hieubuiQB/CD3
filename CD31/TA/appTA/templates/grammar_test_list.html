@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grammar Tests</title>
+</head>
+<body>
+    <h1>List of Grammar Tests</h1>
+    <ul>
+        {% for grammar_test in grammar_tests %}
+            <li><a href="{% url 'grammar_test_detail' grammar_test.pk %}">{{ grammar_test.title }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

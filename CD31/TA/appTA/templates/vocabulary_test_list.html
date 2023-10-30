@@ -1,0 +1,199 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <title>Vocabulary Tests</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>List of Vocabulary Tests</h1>-->
+<!--    <ul>-->
+<!--        {% for vocabulary_test in vocabulary_tests %}-->
+<!--            <li><a href="{% url 'vocabulary_test_detail' vocabulary_test.pk %}">{{ vocabulary_test.title }}</a></li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Bài kiểm tra từ vựng</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Bài kiểm tra từ vựng</h1>-->
+<!--    <ul>-->
+<!--        {% for test in tests %}-->
+<!--            <li>-->
+<!--                <h2>{{ test.title }}</h2>-->
+<!--                <p>{{ test.description }}</p>-->
+<!--                <p>Thời gian giới hạn: {{ test.time_limit_minutes }} phút</p>-->
+<!--                <p>Số lượng câu hỏi: {{ test.number_of_questions }}</p>-->
+<!--                <h3>Câu hỏi:</h3>-->
+<!--                <ul>-->
+<!--                    {% for question in test.vocabularyquestion_set.all %}-->
+<!--&lt;!&ndash;                        <li>{{ question.question_text }} - Đáp án đúng: {{ question.correct_answer }}</li>&ndash;&gt;-->
+<!--                        <p>Câu hỏi:</p>-->
+<!--                        <li>{{ question.question_text }} </li>-->
+<!--                        <p>Câu Trả Lời:</p>-->
+<!--                        <li>- Đáp án đúng: {{ question.correct_answer }}</li>-->
+<!--                    {% endfor %}-->
+<!--                </ul>-->
+<!--            </li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Bài kiểm tra từ vựng</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Bài kiểm tra từ vựng</h1>-->
+<!--    <ul>-->
+<!--        {% for test in tests %}-->
+<!--            <li>-->
+<!--                <h2>{{ test.title }}</h2>-->
+<!--                <p>{{ test.description }}</p>-->
+<!--                <p>Thời gian giới hạn: {{ test.time_limit_minutes }} phút</p>-->
+<!--                <p>Số lượng câu hỏi: {{ test.number_of_questions }}</p>-->
+<!--                <h3>Câu hỏi:</h3>-->
+<!--                <ul>-->
+<!--                    {% for question in test.vocabularyquestion_set.all %}-->
+<!--                        <li>-->
+<!--    <p>Câu hỏi:</p>-->
+<!--    <p>{{ question.question_text }} </p>-->
+<!--    <p>Câu Trả Lời:</p>-->
+<!--    <form method="post" action="" onsubmit="return checkAnswer(this);">-->
+<!--        {% csrf_token %}-->
+<!--        <input type="radio" name="selected_answer" value="{{ question.correct_answer }}"> {{ question.correct_answer }}<br>-->
+<!--        <input type="radio" name="selected_answer" value="{{ question.wrong_answer1 }}"> {{ question.wrong_answer1 }}<br>-->
+<!--        <input type="radio" name="selected_answer" value="{{ question.wrong_answer2 }}"> {{ question.wrong_answer2 }}<br>-->
+<!--        <input type="radio" name="selected_answer" value="{{ question.wrong_answer3 }}"> {{ question.wrong_answer3 }}<br>-->
+<!--        <input type="submit" value="Submit">-->
+<!--    </form>-->
+<!--    <p class="answer-feedback" style="display: none;"></p>-->
+<!--</li>-->
+<!--                    {% endfor %}-->
+<!--                </ul>-->
+<!--            </li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--</body>-->
+<!--</html>-->
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Bài kiểm tra từ vựng</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>Bài kiểm tra từ vựng</h1>-->
+<!--    <ul>-->
+<!--        {% for test in tests %}-->
+<!--            <li>-->
+<!--                <h2>{{ test.title }}</h2>-->
+<!--                <p>{{ test.description }}</p>-->
+<!--                <p>Thời gian giới hạn: {{ test.time_limit_minutes }} phút</p>-->
+<!--                <p>Số lượng câu hỏi: {{ test.number_of_questions }}</p>-->
+<!--                <h3>Câu hỏi:</h3>-->
+<!--                <ul>-->
+<!--                    {% for question in test.vocabularyquestion_set.all %}-->
+<!--                        <li>-->
+<!--                            <p>Câu hỏi:</p>-->
+<!--                            <p>{{ question.question_text }} </p>-->
+<!--                            <p>Câu Trả Lời:</p>-->
+<!--                            <form method="post" action="" onsubmit="return checkAnswer(this);">-->
+<!--                                {% csrf_token %}-->
+<!--                                <input type="radio" name="selected_answer" value="{{ question.correct_answer }}"> {{ question.correct_answer }}<br>-->
+<!--                                <input type="radio" name="selected_answer" value="{{ question.wrong_answer1 }}"> {{ question.wrong_answer1 }}<br>-->
+<!--                                <input type="radio" name="selected_answer" value="{{ question.wrong_answer2 }}"> {{ question.wrong_answer2 }}<br>-->
+<!--                                <input type="radio" name="selected_answer" value="{{ question.wrong_answer3 }}"> {{ question.wrong_answer3 }}<br>-->
+<!--                                <input type="submit" value="Submit">-->
+<!--                            </form>-->
+<!--                            <p class="answer-feedback" style="display: none;"></p>-->
+<!--                            <p class="CorrectAnswer" style="display: none;">{{ question.correct_answer }}</p>-->
+<!--                        </li>-->
+<!--                    {% endfor %}-->
+<!--                </ul>-->
+<!--            </li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--    <script>-->
+<!--    function checkAnswer(form) {-->
+<!--        // Lấy giá trị của đáp án được chọn-->
+<!--        var selectedAnswer = form.querySelector('input[name="selected_answer"]:checked').value;-->
+
+<!--        // Lấy giá trị của đáp án đúng từ thẻ p-->
+<!--        var correctAnswer = form.querySelector('p.CorrectAnswer').innerText;-->
+
+<!--        // Kiểm tra xem đáp án được chọn có trùng với đáp án đúng hay không-->
+<!--        if (selectedAnswer === correctAnswer) {-->
+<!--            // Hiển thị thông báo trả lời chính xác-->
+<!--            var feedback = form.querySelector('.answer-feedback');-->
+<!--            feedback.innerText = 'Trả lời chính xác!';-->
+<!--            feedback.style.color = 'green';-->
+<!--            feedback.style.display = 'block';-->
+<!--        } else {-->
+<!--            // Hiển thị thông báo trả lời sai-->
+<!--            var feedback = form.querySelector('.answer-feedback');-->
+<!--            feedback.innerText = 'Trả lời sai. Đáp án đúng là: ' + correctAnswer;-->
+<!--            feedback.style.color = 'red';-->
+<!--            feedback.style.display = 'block';-->
+<!--        }-->
+
+<!--        // Ngăn chặn form gửi đi-->
+<!--        return false;-->
+<!--    }-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bài kiểm tra từ vựng</title>
+</head>
+<body>
+    <h1>Bài kiểm tra từ vựng</h1>
+    <ul>
+        {% for test in tests %}
+            <li>
+                <h2>{{ test.title }}</h2>
+                <p>{{ test.description }}</p>
+                <p>Thời gian giới hạn: {{ test.time_limit_minutes }} phút</p>
+                <p>Số lượng câu hỏi: {{ test.number_of_questions }}</p>
+                <h3>Câu hỏi:</h3>
+                <ul>
+                    {% for question in test.vocabularyquestion_set.all %}
+                        <li>
+                            <p>Câu hỏi:</p>
+                            <p>{{ question.question_text }} </p>
+                            <p>Câu Trả Lời:</p>
+                            <form method="post" onsubmit="return checkAnswer(this);">
+                                {% csrf_token %}
+                                <input type="radio" name="selected_answer" value="{{ question.correct_answer }}"> {{ question.correct_answer }}<br>
+                                <input type="radio" name="selected_answer" value="{{ question.wrong_answer1 }}"> {{ question.wrong_answer1 }}<br>
+                                <input type="radio" name="selected_answer" value="{{ question.wrong_answer2 }}"> {{ question.wrong_answer2 }}<br>
+                                <input type="radio" name="selected_answer" value="{{ question.wrong_answer3 }}"> {{ question.wrong_answer3 }}<br>
+                            </form>
+                            <p class="CorrectAnswer" style="display: none;">{{ question.correct_answer }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </li>
+        {% endfor %}
+    </ul>
+    <button id="submit-button" onclick="alert('Bạn đã trả lời đúng hết')">Submit</button>
+    <div id="quiz-result" style="display: none;"></div>
+</html>
+

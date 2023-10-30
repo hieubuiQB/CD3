@@ -1,0 +1,353 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Trang Đăng Ký</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            background-color: #f0f0f0;-->
+<!--            margin: 0;-->
+<!--            padding: 0;-->
+<!--        }-->
+<!--        h2 {-->
+<!--            text-align: center;-->
+<!--            margin-top: 20px;-->
+<!--        }-->
+<!--        .container {-->
+<!--            max-width: 400px;-->
+<!--            margin: 0 auto;-->
+<!--            background-color: #fff;-->
+<!--            padding: 20px;-->
+<!--            border-radius: 5px;-->
+<!--            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);-->
+<!--        }-->
+<!--        form {-->
+<!--            display: flex;-->
+<!--            flex-direction: column;-->
+<!--        }-->
+<!--        label {-->
+<!--            margin-bottom: 5px;-->
+<!--            font-weight: bold;-->
+<!--        }-->
+<!--        input[type="text"], input[type="password"] {-->
+<!--            padding: 10px;-->
+<!--            margin-bottom: 10px;-->
+<!--            border: 1px solid #ccc;-->
+<!--            border-radius: 3px;-->
+<!--        }-->
+<!--        button[type="submit"] {-->
+<!--            padding: 10px;-->
+<!--            background-color: #007BFF;-->
+<!--            color: #fff;-->
+<!--            border: none;-->
+<!--            border-radius: 3px;-->
+<!--            cursor: pointer;-->
+<!--        }-->
+<!--        button[type="submit"]:hover {-->
+<!--            background-color: #0056b3;-->
+<!--        }-->
+<!--        #success-message {-->
+<!--            margin-top: 20px;-->
+<!--            text-align: center;-->
+<!--            display: none;-->
+<!--            background-color: #5cb85c;-->
+<!--            color: #fff;-->
+<!--            padding: 10px;-->
+<!--            border-radius: 3px;-->
+<!--        }-->
+<!--        p {-->
+<!--            text-align: center;-->
+<!--            margin-top: 10px;-->
+<!--        }-->
+<!--    </style>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h2>Đăng ký</h2>-->
+
+<!--    <div class="container">-->
+<!--        <form method="post" action="" id="register-form">-->
+<!--            {% csrf_token %}-->
+<!--&lt;!&ndash;            {{ form.as_p }}&ndash;&gt;-->
+<!--            {{ form }}-->
+<!--            <button type="submit">Đăng ký</button>-->
+<!--        </form>-->
+
+<!--        <div id="success-message">-->
+<!--            <p>Đăng ký thành công. Vui lòng đăng nhập.</p>-->
+<!--        </div>-->
+
+<!--        <p>Nếu có tài khoản, <a href="{% url 'login' %}">đăng nhập ngay</a></p>-->
+<!--    </div>-->
+
+<!--    <script>-->
+<!--        document.addEventListener('DOMContentLoaded', function () {-->
+<!--            const form = document.getElementById('register-form');-->
+<!--            const successMessage = document.getElementById('success-message');-->
+
+<!--            form.addEventListener('submit', function (event) {-->
+<!--                event.preventDefault();-->
+
+<!--                // Simulate form submission (You can use AJAX for the real submission)-->
+<!--                // This is just for demonstration purposes-->
+<!--                setTimeout(function () {-->
+<!--                    successMessage.style.display = 'block';-->
+<!--                }, 1000); // Display success message after 1 second (you can adjust this)-->
+
+<!--                // Clear the form (optional)-->
+<!--                form.reset();-->
+<!--            });-->
+<!--        });-->
+<!--    </script>-->
+<!--</body>-->
+<!--</html>-->
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>Đăng ký</title>-->
+<!--    <style>-->
+<!--        body {-->
+<!--        font-family: Arial, sans-serif;-->
+<!--        background-color: #f2f2f2;-->
+<!--        margin: 0;-->
+<!--        padding: 0;-->
+<!--    }-->
+
+<!--    .container {-->
+<!--        width: 400px;-->
+<!--        margin: 0 auto;-->
+<!--        background-color: #fff;-->
+<!--        padding: 20px;-->
+<!--        border-radius: 5px;-->
+<!--        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);-->
+<!--    }-->
+
+<!--    form {-->
+<!--        text-align: center;-->
+<!--    }-->
+
+<!--    h2 {-->
+<!--        margin-bottom: 20px;-->
+<!--        color: #333;-->
+<!--    }-->
+
+<!--    .form-group {-->
+<!--        margin-bottom: 20px;-->
+<!--    }-->
+
+<!--    label {-->
+<!--        display: block;-->
+<!--        font-weight: bold;-->
+<!--        margin-bottom: 5px;-->
+<!--        color: #555;-->
+<!--    }-->
+
+<!--    input[type="text"],-->
+<!--    input[type="password"] {-->
+<!--        width: 100%;-->
+<!--        padding: 10px;-->
+<!--        border: 1px solid #ccc;-->
+<!--        border-radius: 5px;-->
+<!--        font-size: 16px;-->
+<!--    }-->
+
+<!--    button {-->
+<!--        background-color: #007BFF;-->
+<!--        color: #fff;-->
+<!--        padding: 10px 20px;-->
+<!--        border: none;-->
+<!--        border-radius: 5px;-->
+<!--        font-size: 16px;-->
+<!--        cursor: pointer;-->
+<!--    }-->
+
+<!--    button:hover {-->
+<!--        background-color: #0056b3;-->
+<!--    }-->
+
+<!--    </style>-->
+
+<!--</head>-->
+<!--<body>-->
+<!--    <div class="container">-->
+<!--        <form method="post">-->
+<!--            {% csrf_token %}-->
+<!--            <h2>Đăng ký</h2>-->
+<!--            <div class="form-group">-->
+<!--                <label for="username">Tên người dùng:</label>-->
+<!--                {{ form.username }}-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label for="email">Email:</label>-->
+<!--                {{ form.email }}-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label for="password">Mật khẩu:</label>-->
+<!--                {{ form.password1 }}-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label for="confirm_password">Xác nhận mật khẩu:</label>-->
+<!--                {{ form.password2 }}-->
+<!--            </div>-->
+<!--            <button type="submit">Đăng ký</button>-->
+<!--            <p>Nếu có tài khoản, <a href="{% url 'login' %}">đăng nhập ngay</a></p>-->
+<!--            <div id="success-message" style="display: none;">-->
+<!--        <   p>Đăng ký thành công!</p>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--<script>-->
+<!--document.addEventListener('DOMContentLoaded', function() {-->
+<!--    const registerButton = document.getElementById('register-button');-->
+<!--    const successMessage = document.getElementById('success-message');-->
+
+<!--    registerButton.addEventListener('click', function() {-->
+<!--           successMessage.style.display = 'block';-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký</title>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        form {
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left; /* Điều này sẽ làm cho các label và input nằm cùng một hàng */
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #success-message {
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+            background-color: #5cb85c;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="container">
+        <form method="post" id="register-form">
+            {% csrf_token %}
+            <h2>Đăng ký</h2>
+            <div class="form-group">
+                <label name="username">Tên người dùng:</label>
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                <label name="email">Email:</label>
+                {{ form.email }}
+            </div>
+            <div class="form-group">
+                <label name="password1">Mật khẩu:</label>
+                {{ form.password1 }}
+            </div>
+            <div class="form-group">
+                <label name="confirm_password">Xác nhận mật khẩu:</label>
+                {{ form.password2 }}
+            </div>
+            <button type="submit" id="register-button">Đăng ký</button>
+            <p>Nếu có tài khoản, <a href="{% url 'login' %}">đăng nhập ngay</a></p>
+           <div id="success-message" style="display: none;">
+            <p>Đăng ký thành công. Vui lòng đăng nhập.</p>
+           </div>
+
+        </form>
+    </div>
+<!--<script>-->
+<!--    document.addEventListener('DOMContentLoaded', function () {-->
+<!--        const form = document.getElementById('register-form');-->
+<!--        const successMessage = document.getElementById('success-message');-->
+
+<!--        form.addEventListener('submit', function (event) {-->
+<!--            event.preventDefault();-->
+
+<!--            // Simulate form submission (You can use AJAX for the real submission)-->
+<!--            // This is just for demonstration purposes-->
+<!--            setTimeout(function () {-->
+<!--                successMessage.style.display = 'block';-->
+<!--            }, 1000); // Display success message after 1 second (you can adjust this)-->
+
+<!--            // Clear the form (optional)-->
+<!--            form.reset();-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+</body>
+</html>
+
